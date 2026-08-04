@@ -1,0 +1,65 @@
+from time import perf_counter          # Librería estándar para medir el tiempo
+
+# Defino algoritmo Búsqueda Binaria
+fn busqueda_binaria(datos: List[Int], objetivo: Int) -> Int:
+
+    var izquierda = 0                  # Primer índice del array
+    var derecha = len(datos) - 1       # Último índice del array
+
+    # Continúo buscando mientras el rango sea válido
+    while izquierda <= derecha:
+
+        # Calculo la posición del elemento central
+        let medio = izquierda + (derecha - izquierda) // 2
+
+        # Si encontré el elemento, devuelvo su posición
+        if datos[medio] == objetivo:
+            return medio
+
+        # Si el objetivo es mayor, busco en la mitad derecha
+        elif datos[medio] < objetivo:
+            izquierda = medio + 1
+
+        # Si el objetivo es menor, busco en la mitad izquierda
+        else:
+
+            # Evito que el índice sea negativo cuando medio vale 0
+            if medio == 0:
+                break
+
+            derecha = medio - 1
+
+    # Si el elemento no existe, devuelvo -1
+    return -1
+
+
+fn main():
+
+    # Hacemos un array ordenado de 5000 números (0 al 4999)
+    var datos = List[Int]()
+    for i in range(5000):
+        datos.append(i)
+
+    # Número que queremos buscar
+    let objetivo = 4321
+
+    # Arrancamos a medir el tiempo
+    let inicio = perf_counter()
+
+    # Ejecutamos la búsqueda muchas veces para obtener una medición más precisa
+    for _ in range(1_000_000):
+        _ = busqueda_binaria(datos, objetivo)
+
+    # Finalizamos la medición
+    let duracion = perf_counter() - inicio
+
+    # Ejecutamos una vez más para mostrar el resultado encontrado
+    let posicion = busqueda_binaria(datos, objetivo)
+
+    if posicion != -1:
+        print("Elemento encontrado en la posición", posicion)
+    else:
+        print("Elemento no encontrado")
+
+    # Muestra las mediciones de tiempo del algoritmo
+    print("Tiempo:", duracion, "segundos")

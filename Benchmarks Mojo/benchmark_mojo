@@ -1,0 +1,47 @@
+from time import perf_counter          # Librería estándar para medir el tiempo
+
+# Defino algoritmo Bubble Sort
+fn bubble_sort(mut datos: List[Int]):
+
+    let n = len(datos)                 # Obtengo la cantidad de elementos del array a ordenar
+
+    # Recorro el array completo
+    for i in range(n):
+
+        # En cada pasada el último elemento ya está ordenado, se va achicando el rango
+        for j in range(n - 1 - i):
+
+            # Comparo dos elementos consecutivos del array
+            if datos[j] > datos[j + 1]:
+
+                # Si están en el orden incorrecto, los intercambio
+                let aux = datos[j]
+                datos[j] = datos[j + 1]
+                datos[j + 1] = aux
+
+
+fn main():
+
+    # Hacemos un array de 5000 números desordenados, del 4999 al 0
+    var datos = List[Int]()
+    for i in range(4999, -1, -1):
+        datos.append(i)
+
+    # Muestra cómo se encontraba el array al principio
+    print("Primeros 10 antes:", datos[:10])
+
+    # Arrancamos a medir el tiempo
+    let inicio = perf_counter()
+
+    # Algoritmo Bubble Sort
+    bubble_sort(datos)
+
+    # Finalizamos la medición
+    let duracion = perf_counter() - inicio
+
+    # Muestra cómo se encuentra el array al final
+    print("Primeros 10 después:", datos[:10])
+
+    # Muestra las mediciones de tiempo del algoritmo
+    print("Tiempo:", duracion, "segundos")
+    
